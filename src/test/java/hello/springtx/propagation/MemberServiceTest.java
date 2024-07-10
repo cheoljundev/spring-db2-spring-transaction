@@ -86,7 +86,7 @@ class MemberServiceTest {
         String username = "outerTxOn_success";
 
         // when
-        memberService.joinV2(username);
+        memberService.joinV1(username);
 
         // then : 모든 데이터가 정상 저장된다.
         assertTrue(memberRepository.find(username).isPresent());
@@ -104,12 +104,13 @@ class MemberServiceTest {
         String username = "로그예외_outerTxOn_fail";
 
         // when
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> memberService.joinV2(username))
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> memberService.joinV1(username))
                 .isInstanceOf(RuntimeException.class);
 
         // then : 모든 데이터가 롤백된다.
         assertTrue(memberRepository.find(username).isEmpty());
         assertTrue(logRepository.find(username).isEmpty());
     }
+
 
 }
